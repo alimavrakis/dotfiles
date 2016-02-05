@@ -1,0 +1,15 @@
+# partial command history
+## arrow up
+"\e[A":history-search-backward
+## arrow down
+"\e[B":history-search-forward
+
+$if mode=vi
+    set keymap vi-command
+    "gg": beginning-of-history
+    "G": end-of-history
+    set keymap vi-insert       #notice how the "jj" movement is
+    "jk": vi-movement-mode     #after 'set keymap vi-insert'?
+    "\C-w": backward-kill-word
+    "\C-p": history-search-backward
+$endif
