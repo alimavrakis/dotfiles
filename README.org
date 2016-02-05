@@ -1,0 +1,8 @@
+* dotfiles
+** A repository of configuration files optimized for FactSet Engineering environments
+***  Quick Start
+**** Upgrade your software
+In the process of setting up my environment I've installed a few dependencies into my ~local/bin/~ dir add the following line to your ~.profile-user~ to bootstrap the setup process:
+~export PATH=home/user/amavrakis/local/bin/:$PATH~
+**** GNU Stow
+GNU stow is a simple utility to make configuration file management easier
