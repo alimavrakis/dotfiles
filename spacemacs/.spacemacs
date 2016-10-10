@@ -24,28 +24,47 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     angular
      auto-completion
      better-defaults
+     c-c++
      emacs-lisp
+     evernote
+     python
+     shell-scripts
+     typescript
+     github
+     spacemacs-layouts
+     dash
+     erc
+     ibuffer
+     cscope
      git
      javascript
      html
      eyebrowse
      markdown
      org
-     ;; (shell :variables
-     ;;        shell-default-height 20
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     angular
+     (shell :variables
+            shell-default-shell 'eshell
+            shell-enable-smart-eshell t
+            shell-default-height 20
+            shell-default-position 'bottom)
+     ;; semantic
      syntax-checking
-     ;; version-control
+     perforce
+     evil-cleverparens
+     ;; smex
+     version-control
+     grunt
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      xkcd
+                                      jscs)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -100,7 +119,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(wombat
+   dotspacemacs-themes '(;; wombat
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
@@ -244,34 +263,96 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
+  ;; Set sh-mode to apply to .profile-user and .inputrc
+  (dolist (pattern '(".profile-user\\'"
+                     ".inputrc\\'"))
+    (add-to-list 'auto-mode-alist (cons pattern 'sh-mode)))
+  (add-to-list 'load-path "/home/user/amavrakis/.emacs.d/private/local/emacs-gulpjs")
+  ;; (require 'gulpjs)
+  (autoload 'gulpjs-start-task "gulpjs" "Start a gulp task." t)
+  ;; (setq-default evil-search-module 'evil-search)
   (setq-default
    evil-search-highlight-persist nil
-   global-evil-search-highlight-persist nil)
-  )
+   global-evil-search-highlight-persist nil)  )
 
 (defun dotspacemacs/user-config ()
   "configuration function for user code.
 this function is called at the very end of spacemacs initialization after
 layers configuration. you are free to put any user code."
 
-    ;; Set up scss-mode for all .scss files
-    (add-to-list 'load-path (expand-file-name "~/.emacs.d/private/scss-mode"))
-    (autoload 'scss-mode "scss-mode")
-    (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+  ;; Set up scss-mode for all .scss files
+  ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/private/scss-mode"))
+  ;; (autoload 'scss-mode "scss-mode")
+  ;; (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
-    ;; add grunt to the load path
-    (add-to-list 'load-path (expand-file-name "~/.emacs.d/private/grunt"))
-    (require 'grunt)
+  (setq-default evil-escape-key-sequence "jk")
+  (spacemacs/set-leader-keys
+    ",j" 'jscs-fix
+    "W." 'spacemacs/workspaces-micro-state
+    "W1" 'spacemacs//workspaces-eyebrowse-switch-to-window-config-1-1
+    "W2" 'spacemacs//workspaces-eyebrowse-switch-to-window-config-2-2
+    "W3" 'spacemacs//workspaces-eyebrowse-switch-to-window-config-3-3
+    "W4" 'spacemacs//workspaces-eyebrowse-switch-to-window-config-4-4
+    "wq" 'kill-buffer-and-window)
+  ;; (set-face-underline-p 'highlight nil)
+  ;; (setq-default org-enable-github-support t)
+  (setq-default default-tab-width 2 indent-tabs-mode nil)
+  (setq c-basic-offset 2)
+  (setq powerline-default-separator nil)
+  (setq javascript-indent-level 2)
+  (setq js2-basic-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq css-indent-offset 2)
+  (setq json-reformat:indent-width 2)
+  (setq-default flycheck-jscsrc "~/.jscsrc")
 
-    ;; Show line numbers globally
-    ;; (global-linum-mode 1)
+  ;; (neo-vc-integration)
 
-    ;; Global auto complete
-    ;; (global-company-mode)
-    (set-face-underline-p 'highlight nil)
-    (setq-default org-enable-github-support t)
-    (add-hook 'prog-mode-hook 'linum-mode)
-  )
+  ;; ignore these directories when in a project
+  (eval-after-load 'projectile
+    '(progn
+       (add-to-list 'projectile-globally-ignored-directories ".stage")
+       (add-to-list 'projectile-globally-ignored-directories "node_modules")))
+  (eval-after-load 'grep
+    '(progn
+       (add-to-list 'grep-find-ignored-directories ".stage")
+       (add-to-list 'grep-find-ignored-directories "bower_components")
+       (add-to-list 'grep-find-ignored-directories "dist")
+       (add-to-list 'grep-find-ignored-directories "node_modules")))
+
+  ;; (add-hook 'prog-mode-hook 'nlinum-mode)
+  ;; ;; Custom org-mode configuration
+  ;; ;; helper so I can just use a list of strings for templates
+  ;; (defun djk/newline-template (string-list)
+  ;;   (mapconcat 'identity string-list "\n"))
+
+  ;; ;; Org locations
+  ;; (setq org-directory "~/org")
+  ;; (setq org-default-notes-file "~/org/notes.org")
+
+  ;; ;; Default base custom template
+  ;; (defvar djk/org-basic-capture-template
+  ;;   (djk/newline-template
+  ;;    '("* TODO %^{task}"
+  ;;      ":PROPERTIES:"
+  ;;      ":EFFORT: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00|8:00}"
+  ;;      ":END:"
+  ;;      "Captured %<%Y-%m-%d %H:%M>"
+  ;;      "%?"
+  ;;      ""
+  ;;      "%i")))
+
+  ;; ;; Set up global capturing
+  ;; (evil-leader/set-key "oc" 'org-capture)
+
+  ;; ;; Capture templates
+  ;; (setq org-capture-templates
+  ;;       `(("t" "Tasks" entry
+  ;;          (file+headline (concat org-directory "/organizer.org") "Inbox")
+  ;;          ,djk/org-basic-capture-template)))
+   )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -283,7 +364,7 @@ layers configuration. you are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+    ("b6471e4f1acfeda344b302817a1a7e928442e2f0a72552f4fa1f5030d1845cc7" "3632cf223c62cb7da121be0ed641a2243f7ec0130178722554e613c9ab3131de" "603a9c7f3ca3253cb68584cb26c408afcf4e674d7db86badcfe649dd3c538656" "40bc0ac47a9bd5b8db7304f8ef628d71e2798135935eb450483db0dbbfff8b11" "51e228ffd6c4fff9b5168b31d5927c27734e82ec61f414970fc6bcce23bc140d" "20e359ef1818a838aff271a72f0f689f5551a27704bf1c9469a5c2657b417e6c" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bcc6775934c9adf5f3bd1f428326ce0dcd34d743a92df48c128e6438b815b44f" "68d36308fc6e7395f7e6355f92c1dd9029c7a672cbecf8048e2933a053cf27e6" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(erc-autojoin-channels-alist nil)
  '(erc-autojoin-mode nil)
  '(erc-nick "amavrakis")
@@ -298,5 +379,4 @@ layers configuration. you are free to put any user code."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
- '(mode-line ((t (:background "#121212" :foreground "#b2b2b2" :box (:line-width 1 :color "#111111") :family "DejaVu Sans Mono for Powerline")))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

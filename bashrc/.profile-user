@@ -13,11 +13,11 @@ export TERM=xterm-256color
 #source /home/fonix/prd_progs/tools/fdb_utils.sh
 #alias build_fdb='/home/fonix/prd_progs/fdb/build_fdb.sh'
 #unlock_fdb_utils=1
+export PATH=/home/user/kejohnson/.local/bin/:$PATH
 export PATH=~/local/bin/:$PATH
-export PATH=~/software/node/bin/:$PATH
-# export PATH="/home/user/amavrakis/software/emacs/src/:$PATH"
-# export PATH=~/software/zsh/Src/:$PATH
+# export PATH=~/software/node/bin/:$PATH
 export PS1="\[\e[36m\]\u\[\e[m\]@\[\e[35m\]\h\[\e[m\]:\[\e[33;1m\]\w\[\e[m\]\$ "
+export DBG_BATCH_ASSERT=1
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -35,12 +35,21 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias sl='ls'
+alias sl='sl'
 
 alias rb='/home/data/index/script/common/submit_review_board.pl'
 alias blp='blp -d -p'
 alias ssh='ssh -X'
+alias fx11='ssh fx11'
 alias screen='screen -dRU'
+alias emacs='emacs -nw'
+alias tmuxa='tmux attach -d'
+
+if [[ $(hostname -s) != unixscrn* ]]; then
+  echo "hello"
+  export NVM_DIR="/home/user/amavrakis/local/nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+fi
 
 
 # rakefds aliases
@@ -69,3 +78,7 @@ LS_COLORS=$LS_COLORS:'di=0;32:' ; export LS_COLORS
 # export LC_ALL="en_US.UTF-8"
 # vim keybindings
 set -o vi
+export PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
+export PATH=$PATH:./node_modules/.bin
+alias pkgupvuln="\$HOME/pkg/sbin/pkg_admin -K ~/pkg/var/db/pkg fetch-pkg-vulnerabilities >/dev/null 2>&1"
+#exec $(which zsh) --login

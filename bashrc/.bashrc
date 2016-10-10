@@ -3,5 +3,7 @@ if [ "$TERM" = "putty" ]; then
 else
     export LC_ALL=en_US.utf8
 fi
+export CVSEDITOR=vim
+export CVS_RSH=ssh
 
-source /home/user/amavrakis/.profile-user
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

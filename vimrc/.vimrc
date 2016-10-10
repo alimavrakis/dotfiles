@@ -2,7 +2,7 @@
 colorscheme desert
 
 " indentions
-set expandtab tabstop=4 shiftwidth=4 smartindent
+set expandtab tabstop=2 shiftwidth=2 smartindent
 set nu
 ino jk <esc>
 
