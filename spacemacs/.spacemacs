@@ -24,39 +24,39 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     angular
      auto-completion
      better-defaults
      c-c++
-     emacs-lisp
-     evernote
-     python
-     shell-scripts
-     typescript
-     github
-     spacemacs-layouts
-     dash
-     erc
-     ibuffer
      cscope
+     dash
+     emacs-lisp
+     erc
+     evernote
+     evil-cleverparens
      git
-     javascript
+     github
      html
-     eyebrowse
+     ibuffer
+     javascript
      markdown
      org
+     perforce
+     python
+     shell-scripts
+     spacemacs-layouts
+     syntax-checking
+     typescript
+     version-control
      (shell :variables
             shell-default-shell 'eshell
             shell-enable-smart-eshell t
             shell-default-height 20
             shell-default-position 'bottom)
+     ;; angular
+     ;; eyebrowse
+     ;; grunt
      ;; semantic
-     syntax-checking
-     perforce
-     evil-cleverparens
      ;; smex
-     version-control
-     grunt
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -119,7 +119,7 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(;; wombat
+   dotspacemacs-themes '(wombat
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
@@ -285,6 +285,11 @@ layers configuration. you are free to put any user code."
   ;; (autoload 'scss-mode "scss-mode")
   ;; (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
+  (eval-after-load 'flycheck
+    '(progn
+       (setq flycheck-gcc-include-path (list "/home/dev/fonix/online/qa/src/"))
+       (setq flycheck-c/c++-gcc-executable "/home/user/kejohnson/pkg/gcc49/bin/gcc")))
+
   (setq-default evil-escape-key-sequence "jk")
   (spacemacs/set-leader-keys
     ",j" 'jscs-fix
@@ -296,18 +301,29 @@ layers configuration. you are free to put any user code."
     "wq" 'kill-buffer-and-window)
   ;; (set-face-underline-p 'highlight nil)
   ;; (setq-default org-enable-github-support t)
+  (setq-default standard-indent 2)
+  (setq-default web-mode-attr-indent-offset 2)
   (setq-default default-tab-width 2 indent-tabs-mode nil)
   (setq c-basic-offset 2)
   (setq powerline-default-separator nil)
   (setq javascript-indent-level 2)
   (setq js2-basic-offset 2)
+  (setq js-indent-level 2)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
+  (setq web-mode-attr-indent-offset nil)
   (setq css-indent-offset 2)
+  (setq typescript-indent-level 2)
   (setq json-reformat:indent-width 2)
+  (setq tide-format-options '(:indentSize 2 :tabSize 2 :insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces nil))
   (setq-default flycheck-jscsrc "~/.jscsrc")
 
+  (defun my-web-mode-hook ()
+    "Hooks for Web mode."
+    (setq web-mode-attr-indent-offset 2)
+    )
+  (add-hook 'web-mode-hook  'my-web-mode-hook)
   ;; (neo-vc-integration)
 
   ;; ignore these directories when in a project
@@ -321,6 +337,11 @@ layers configuration. you are free to put any user code."
        (add-to-list 'grep-find-ignored-directories "bower_components")
        (add-to-list 'grep-find-ignored-directories "dist")
        (add-to-list 'grep-find-ignored-directories "node_modules")))
+
+  (flycheck-def-config-file-var flycheck-typescript-tslint-config
+      typescript-tslint
+      "tslint.json"
+    :safe #'stringp)
 
   ;; (add-hook 'prog-mode-hook 'nlinum-mode)
   ;; ;; Custom org-mode configuration

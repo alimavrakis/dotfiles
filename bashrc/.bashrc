@@ -7,3 +7,5 @@ export CVSEDITOR=vim
 export CVS_RSH=ssh
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export PATH="$HOME/.yarn/bin:$PATH"

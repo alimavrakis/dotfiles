@@ -10,12 +10,33 @@ fi
 
 export TERM=xterm-256color
 
-#source /home/fonix/prd_progs/tools/fdb_utils.sh
-#alias build_fdb='/home/fonix/prd_progs/fdb/build_fdb.sh'
-#unlock_fdb_utils=1
-export PATH=/home/user/kejohnson/.local/bin/:$PATH
-export PATH=~/local/bin/:$PATH
-# export PATH=~/software/node/bin/:$PATH
+source /home/fonix/prd_progs/tools/fdb_utils.sh
+alias build_fdb='/home/fonix/prd_progs/fdb/build_fdb.sh'
+unlock_fdb_utils=1
+
+####
+# Path Additions
+####
+
+# Kevin's Local bin
+export PATH=/home/user/kejohnson/.local/bin:$PATH
+export PATH=~/local/bin:$PATH
+
+# Updated version of git to work with magit
+export PATH=/usr/bin/git:$PATH
+#export PATH=~/software/node/bin/:$PATH
+
+# pkgsrc
+export PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
+
+# Source local bin for web projects
+export PATH=$PATH:./node_modules/.bin
+
+# Add yarn
+export PATH="$HOME/.yarn/bin:$PATH"
+
+
+# Setup Prompt
 export PS1="\[\e[36m\]\u\[\e[m\]@\[\e[35m\]\h\[\e[m\]:\[\e[33;1m\]\w\[\e[m\]\$ "
 export DBG_BATCH_ASSERT=1
 
@@ -37,18 +58,23 @@ alias la='ls -A'
 alias l='ls -CF'
 alias sl='sl'
 
+
+alias npmg='npm install -g jscs jsdoc jshint tern tslint typescript typescript-formatter vmd yo'
 alias rb='/home/data/index/script/common/submit_review_board.pl'
 alias blp='blp -d -p'
 alias ssh='ssh -X'
-alias fx11='ssh fx11'
+alias fx13='ssh fxdeva13'
 alias screen='screen -dRU'
-alias emacs='emacs -nw'
 alias tmuxa='tmux attach -d'
+alias grelease='git checkout master && git pull upstream master --tags && gulp release && git push upstream master --tags'
 
 if [[ $(hostname -s) != unixscrn* ]]; then
-  echo "hello"
+  echo "*************"
+  echo "* hello ali *"
+  echo "*************"
   export NVM_DIR="/home/user/amavrakis/local/nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+  nvm use 6.11.0
 fi
 
 
@@ -68,17 +94,13 @@ export P4DIFF="git diff"
 
 LS_COLORS=$LS_COLORS:'di=0;32:' ; export LS_COLORS
 
-# export LANG="en_US.UTF-8"
-# export LC_COLLATE="en_US.UTF-8"
-# export LC_CTYPE="en_US.UTF-8"
-# export LC_MESSAGES="en_US.UTF-8"
-# export LC_MONETARY="en_US.UTF-8"
-# export LC_NUMERIC="en_US.UTF-8"
-# export LC_TIME="en_US.UTF-8"
-# export LC_ALL="en_US.UTF-8"
 # vim keybindings
 set -o vi
-export PATH=$PATH:$HOME/pkg/bin:$HOME/pkg/sbin
-export PATH=$PATH:./node_modules/.bin
 alias pkgupvuln="\$HOME/pkg/sbin/pkg_admin -K ~/pkg/var/db/pkg fetch-pkg-vulnerabilities >/dev/null 2>&1"
+
 #exec $(which zsh) --login
+
+# Shell Bookmarks
+export USER_BOOKMARKS=~/.shell_bookmarks
+export SYS_BOOKMARKS=/etc/.shell_bookmarks
+
