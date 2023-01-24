@@ -1,14 +1,12 @@
-#
-# p4 path: //depot/unix/etc/skel/local.profile
-# git path for cfengine: common/redhat-profiles/skel/local.profile 
-#
-# This file is controlled by root. For user changes,
-# please edit ~/.profile-user.
-#
-if [ -f /etc/.profile ] ; then
-        . /etc/.profile
-fi
+echo "Sourcing '~/.profile'…"
 
-if [ -f ~/.profile-user ] ; then
-        . ~/.profile-user
-fi
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias sl='sl'
+
+alias tmuxa='tmux attach -d'
+
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/opt/homebrew/bin/brew shellenv)"

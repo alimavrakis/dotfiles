@@ -6,27 +6,36 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-# enable profiling data
-# zmodload zsh/zprof
-
 # log
-echo "Sourcing './zsh_ali'..."
+echo "Sourcing '~/.zshrc'…"
+
 #
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  echo "Sourcing '~/.zprezto/init.zsh'…"
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+  zstyle ':prezto:load' pmodule \
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'completion' \
+  'prompt'
 fi
-# source "${HOME}/.bash_profile"
 
-# Customize to your needs...
-# add yarn bin to PATH
-export PATH="$(yarn global bin):$PATH"
+# Enable vi mode
+set -o vi
+
+# Customizations below this line
+source "${HOME}/.profile"
 
 # set default text editor
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-# I don't what this does...should read up on it later
 setopt EXTENDED_GLOB
 
 export NVM_DIR="$HOME/.nvm"
@@ -60,6 +69,3 @@ function up {
         cd $CDSTR
     fi
 }
-
-# print profiling info
-#

@@ -19,7 +19,7 @@ set enc=utf-8
 set fenc=utf-8
 set termencoding=utf-8
 
-" turns of vi compatibility mode
+" turns off vi compatibility mode
 set nocompatible
 
 " when scrolling up down, show at least 5 lines
@@ -48,23 +48,3 @@ autocmd BufWritePre     * :call TrimWhiteSpace()
 
 " insert a single char without entering insert mode
 :nnoremap <Space>i i_<Esc>r
-
-" autocmd FileType html,javascript autocmd FileWritePre    * :call TrimWhiteSpace()
-" autocmd FileType html,javascript autocmd FileAppendPre   * :call TrimWhiteSpace()
-" autocmd FileType html,javascript autocmd FilterWritePre  * :call TrimWhiteSpace()
-" autocmd FileType html,javascript autocmd BufWritePre     * :call TrimWhiteSpace()
-
-" Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
-" call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-" Plug 'junegunn/vim-easy-align'
-
-" Plug 'leafgarland/typescript-vim'
-
-" Initialize plugin system
-" call plug#end()
