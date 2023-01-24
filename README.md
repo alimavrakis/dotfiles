@@ -1,12 +1,17 @@
 # dotfiles
 
-Ali's repository of configuration files
+Ali's repository of configuration files.
 
 ## Quick Start
+
+### Prerequisites
+
+These instructions assume you have GNU Stow and Prezto installed.
 
 ### Clone this repository
 
 Start by cloning this repository into your dev directory by running the following command:
+o
 
 `$ git clone git@github.com:alimavrakis/dotfiles.git ~/path/to/dev/directory`
 
@@ -17,6 +22,8 @@ GNU stow is a simple utility to make configuration file management easier. You c
 `$ cd ~/path/to/dev/directory/dotfiles`
 
 `$ stow bash --target=$HOME`
+
+`$ stow vscode --target=$HOME/Library/Application\ Support/Code/User`
 
 ### That's All Folks!
 
