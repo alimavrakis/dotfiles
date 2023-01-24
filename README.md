@@ -7,6 +7,7 @@ Ali's repository of configuration files
 ### Clone this repository
 
 Start by cloning this repository into your dev directory by running the following command:
+
 `$ git clone git@github.com:alimavrakis/dotfiles.git ~/path/to/dev/directory`
 
 ### GNU Stow
@@ -14,6 +15,7 @@ Start by cloning this repository into your dev directory by running the followin
 GNU stow is a simple utility to make configuration file management easier. You can still symlink files from this repo by hand, but stow will save you a lot of time. With stow installed:
 
 `$ cd ~/path/to/dev/directory/dotfiles`
+
 `$ stow bash --target=$HOME`
 
 ### That's All Folks!
