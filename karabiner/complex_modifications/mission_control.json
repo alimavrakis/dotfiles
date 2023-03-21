@@ -1,0 +1,21 @@
+{
+  "title": "Center Mouse Button to Mission Control",
+  "rules": [
+    {
+      "description": "Launch Mission Control when center mouse button is pressed",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "pointing_button": "button3"
+          },
+          "to": [
+            {
+              "key_code": "mission_control"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,51 +1,73 @@
 {
-    "workbench.colorTheme": "Default Dark+",
-    /**
-     * Default to using 4 spaces instead of tabs
-     */
-    "editor.tabSize": 4,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
+  "workbench.colorTheme": "Default Dark+",
+  /**
+   * Default to using 4 spaces instead of tabs
+   */
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
 
-    /**
-     * Vim settings
-     */
-    "vim.insertModeKeyBindings": [
+  /**
+   * Vim settings
+   */
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "k"],
+      "after": ["<Esc>"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["u"],
+      "after": [],
+      "commands": [
         {
-            "before": [
-                "j",
-                "k"
-            ],
-            "after": [
-                "<Esc>"
-            ]
+          "command": "undo",
+          "args": []
         }
-    ],
-    "vim.normalModeKeyBindingsNonRecursive": [
+      ]
+    },
+    {
+      "before": ["<C-r>"],
+      "after": [],
+      "commands": [
         {
-            "before": [
-                "u"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "undo",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [
-                "<C-r>"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "redo",
-                    "args": []
-                }
-            ]
+          "command": "redo",
+          "args": []
         }
-    ],
-    "vim.useSystemClipboard": true
+      ]
+    },
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "command": "whichkey.triggerKey",
+          "args": "m"
+        }
+      ]
+    }
+  ],
+  "vim.useSystemClipboard": true,
+  "vim.easymotion": true,
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>"],
+      "commands": ["vspacecode.space"]
+    },
+    {
+      "before": [","],
+      "commands": [
+        "vspacecode.space",
+        {
+          "command": "whichkey.triggerKey",
+          "args": "m"
+        }
+      ]
+    }
+  ]
 }

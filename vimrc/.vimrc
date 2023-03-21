@@ -11,7 +11,10 @@ filetype on
 filetype plugin on
 set grepprg=grep\ -nH\ $*
 
-"Cool tab completion stuff
+" Share clipboard with MacOS
+set clipboard=unnamed
+
+" Cool tab completion stuff
 set wildmenu
 set wildmode=list:longest,full
 

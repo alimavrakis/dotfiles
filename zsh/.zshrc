@@ -9,7 +9,8 @@
 # log
 echo "Sourcing '~/.zshrc'…"
 
-#
+echo "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   echo "Sourcing '~/.zprezto/init.zsh'…"
@@ -69,3 +70,6 @@ function up {
         cd $CDSTR
     fi
 }
+
+source ~/.zshrc_anduril
+export PATH=$PATH:$HOME/go/bin
